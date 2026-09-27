@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Consola CXR — CAD multiclasse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/dashboard.css">
+</head>
+<body>
+  <div id="ecra-login" class="login-wrap">
+    <div class="login-card">
+      <!--<p class="eyebrow">CAD · não diagnóstico</p>-->
+      <h1 style="text-align: center;">Login</h1>
+      <!--<p class="lead">Classificação softmax de radiografia de tórax. Acesso por JWT e perfil (médico, radiologista, administrador).</p>-->
+      <form id="form-login">
+        <label>Email
+  <input type="text" name="email" autocomplete="username" required>
+        </label>
+        <label>Senha
+          <input type="password" name="senha" autocomplete="current-password" required>
+        </label>
+        <button type="submit">Entrar</button>
+        <p id="login-erro" class="erro" hidden></p>
+      </form>
+    </div>
+  </div>
+
+  <div id="ecra-app" hidden>
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark">CXR</span>
+        <div>
+          <strong>Consola clínicannn</strong>
+          <small>Ensemble oficial · semente 42eee</small>
+        </div>
+      </div>
+      <nav id="nav-principal">
+        <button data-sec="inicio" class="activo">Início</button>
+        <button data-sec="inferencia">Testar imagem</button>
+        <button data-sec="modelos" data-roles="radiologista,admin">Dados de treino</button>
+        <button data-sec="feedback" data-roles="radiologista,admin">Feedback</button>
+        <button data-sec="utilizadores" data-roles="admin">Utilizadores</button>
+        <button data-sec="conta">A minha senha</button>
+      </nav>
+      <button type="button" id="btn-sair" class="sair">Sair</button>
+    </aside>
+    <div class="main">
+      <header class="topbar">
+        <div>
+          <h2 id="titulo-sec">Início</h2>
+          <p id="sub-sec">Painel</p>
+        </div>
+        <div class="who">
+          <span id="who-nome"></span>
+          <span id="who-papel" class="badge"></span>
+        </div>
+      </header>
+
+      <section id="sec-inicio" class="seccao">
+        <div class="grid-2">
+          <article class="card">
+            <h3>Como o feedback entra no modelo</h3>
+            <p>Sim, os modelos <em>podem</em> aprender com o parecer do radiologista — mas <strong>não em tempo real</strong>. Cada rótulo fica pendente até um administrador o aceitar. Só então entra no corpus de re-treino <em>offline</em>. Os ficheiros <code>.keras</code> em produção não são actualizados por um clique.</p>
+            <ul class="lista">
+              <li>Júnior: peso 0.25, sempre sujeito a revisão.</li>
+              <li>Pleno: peso 0.70.</li>
+              <li>Sénior: peso 1.00, ainda assim sem treino automático.</li>
+            </ul>
+          </article>
+          <article class="card aviso">
+            <h3>Protecção contra parecer frágil</h3>
+            <p>Um radiologista pouco experiente não consegue “puxar” o modelo sozinho. O nível de experiência é definido pelo administrador. Há rasto de quem criou a conta e de quem aceitou o rótulo. Discordância com o ensemble não treina nada até revisão humana.</p>
+          </article>
+        </div>
+        <div id="inicio-stats" class="stats"></div>
+      </section>
+
+      <section id="sec-inferencia" class="seccao" hidden>
+        <article class="card">
+          <h3>Enviar radiografia</h3>
+          <form id="form-predict">
+            <label>Imagem JPEG/PNG
+              <input type="file" name="file" accept="image/jpeg,image/png,image/webp" required>
+            </label>
+            <label class="check">
+              <input type="checkbox" name="incluir_xai" checked>
+              Incluir Grad-CAM
+            </label>
+            <button type="submit">Classificar</button>
+          </form>
+          <p id="predict-erro" class="erro" hidden></p>
+        </article>
+        <div id="predict-resultado"></div>
+      </section>
+
+      <section id="sec-modelos" class="seccao" hidden>
+        <div id="modelos-lista" class="grid-2"></div>
+      </section>
+
+      <section id="sec-feedback" class="seccao" hidden>
+        <article class="card" id="card-corpus" hidden>
+          <div class="row-between">
+            <h3>Corpus aceite (re-treino offline)</h3>
+            <button type="button" id="btn-corpus" class="secundario">Actualizar exportação</button>
+          </div>
+          <pre id="corpus-json" class="mono"></pre>
+        </article>
+        <article class="card">
+          <h3>Pareceres</h3>
+          <div id="feedback-lista"></div>
+        </article>
+      </section>
+
+      <section id="sec-utilizadores" class="seccao" hidden>
+        <article class="card">
+          <h3>Registar utilizador</h3>
+          <form id="form-user" class="form-grid">
+            <label>Email <input type="text" name="email" required></label>
+            <label>Primeiro nome <input name="primeiro_nome" required></label>
+            <label>Último nome <input name="ultimo_nome" required></label>
+            <label>Senha inicial <input type="password" name="senha" minlength="8" required></label>
+            <label>Função
+              <select name="funcao">
+                <option value="medico">Médico</option>
+                <option value="radiologista">Radiologista</option>
+                <option value="admin">Administrador</option>
+              </select>
+            </label>
+            <label>Nível (radiologista)
+              <select name="nivel_experiencia">
+                <option value="junior">Júnior</option>
+                <option value="pleno" selected>Pleno</option>
+                <option value="senior">Sénior</option>
+              </select>
+            </label>
+            <button type="submit">Criar conta</button>
+          </form>
+          <p id="user-erro" class="erro" hidden></p>
+        </article>
+        <article class="card">
+          <h3>Contas</h3>
+          <div class="tabela-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Email</th>
+                  <th>Função</th>
+                  <th>Nível</th>
+                  <th>Criada</th>
+                  <th>Por</th>
+                  <th>Estado</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="users-tbody"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section id="sec-conta" class="seccao" hidden>
+        <article class="card estreito">
+          <h3>Actualizar a minha senha</h3>
+          <form id="form-senha">
+            <label>Senha actual <input type="password" name="senha_atual" required></label>
+            <label>Nova senha <input type="password" name="senha_nova" minlength="8" required></label>
+            <button type="submit">Guardar</button>
+          </form>
+          <p id="senha-msg" hidden></p>
+        </article>
+      </section>
+    </div>
+  </div>
+  <script src="/static/dashboard.js"></script>
+</body>
+</html>

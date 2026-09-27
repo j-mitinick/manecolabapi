@@ -1,0 +1,16 @@
+.env
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+*.sqlite
+*.sqlite-journal
+dados/predicoes/*
+!dados/predicoes/.gitkeep
+*.keras
+.DS_Store
+.idea/
+.vscode/
+*.log
