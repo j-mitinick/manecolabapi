@@ -12,11 +12,8 @@ NIVEIS_EXPERIENCIA = ("junior", "pleno", "senior")
 PESO_EXPERIENCIA = {"junior": 0.25, "pleno": 0.70, "senior": 1.00}
 
 NOTA_CLINICA = (
-    "Resultado de classificação de imagem (softmax, 4 classes exclusivas), não um "
-    "diagnóstico médico. Padrões radiológicos de COVID-19, pneumonia e tuberculose "
-    "podem sobrepor-se. O corpus de treino tem coincidência classe–fonte e não tem "
-    "split por paciente. Correlacionar com clínica e exames laboratoriais. Não usar "
-    "como dispositivo autónomo."
+    "Resultado obtido não é um diagnóstico conclusivo."
+    "Padrões radiológicos de COVID-19, pneumonia e tuberculose podem sobrepor-se."
 )
 NOTA_LIMIARES = (
     "Limiares one-vs-rest calibrados no conjunto de validação do estudo para "
