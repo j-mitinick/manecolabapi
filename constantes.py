@@ -12,7 +12,7 @@ NIVEIS_EXPERIENCIA = ("junior", "pleno", "senior")
 PESO_EXPERIENCIA = {"junior": 0.25, "pleno": 0.70, "senior": 1.00}
 
 NOTA_CLINICA = (
-    "Resultado obtido não é um diagnóstico conclusivo."
+    "Resultado obtido não é um diagnóstico conclusivo. "
     "Padrões radiológicos de COVID-19, pneumonia e tuberculose podem sobrepor-se."
 )
 NOTA_LIMIARES = (

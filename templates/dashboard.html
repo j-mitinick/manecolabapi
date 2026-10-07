@@ -3,176 +3,183 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Consola CXR — CAD multiclasse</title>
+  <title>ManecoLab</title>
+  <link rel="icon" type="image/png" href="/static/img/logo-sem-fundo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/dashboard.css">
 </head>
 <body>
   <div id="ecra-login" class="login-wrap">
-    <div class="login-card">
-      <!--<p class="eyebrow">CAD · não diagnóstico</p>-->
-      <h1 style="text-align: center;">Login</h1>
-      <!--<p class="lead">Classificação softmax de radiografia de tórax. Acesso por JWT e perfil (médico, radiologista, administrador).</p>-->
-      <form id="form-login">
+    <div class="login-cenario">
+      <img class="login-logo" src="/static/img/logo-sem-fundo.png" alt="ManecoLab">
+      <form id="form-login" class="login-card">
         <label>Email
-  <input type="text" name="email" autocomplete="username" required>
+          <input type="text" name="email" autocomplete="username" required>
         </label>
-        <label>Senha
+        <label>Palavra-passe
           <input type="password" name="senha" autocomplete="current-password" required>
         </label>
         <button type="submit">Entrar</button>
         <p id="login-erro" class="erro" hidden></p>
       </form>
     </div>
+    <p class="login-credito">criado por: José Reis</p>
   </div>
 
   <div id="ecra-app" hidden>
-    <aside class="sidebar">
-      <div class="brand">
-        <span class="brand-mark">CXR</span>
-        <div>
-          <strong>Consola clínicannn</strong>
-          <small>Ensemble oficial · semente 42eee</small>
-        </div>
-      </div>
-      <nav id="nav-principal">
-        <button data-sec="inicio" class="activo">Início</button>
-        <button data-sec="inferencia">Testar imagem</button>
-        <button data-sec="modelos" data-roles="radiologista,admin">Dados de treino</button>
-        <button data-sec="feedback" data-roles="radiologista,admin">Feedback</button>
-        <button data-sec="utilizadores" data-roles="admin">Utilizadores</button>
-        <button data-sec="conta">A minha senha</button>
-      </nav>
-      <button type="button" id="btn-sair" class="sair">Sair</button>
-    </aside>
-    <div class="main">
-      <header class="topbar">
-        <div>
-          <h2 id="titulo-sec">Início</h2>
-          <p id="sub-sec">Painel</p>
-        </div>
-        <div class="who">
-          <span id="who-nome"></span>
+    <header class="app-top">
+      <div class="who-block">
+        <img src="/static/img/logo-sem-fundo.png" alt="ManecoLab" class="logo-mini">
+        <div class="who-texto">
+          <strong id="who-nome"></strong>
           <span id="who-papel" class="badge"></span>
         </div>
-      </header>
+      </div>
+      <button type="button" id="btn-sair" class="btn-sair">Sair</button>
+    </header>
 
-      <section id="sec-inicio" class="seccao">
-        <div class="grid-2">
+    <div class="app-body">
+      <nav id="nav-principal" class="nav-app">
+        <button data-sec="inicio" class="activo">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.5 12 4l8 7.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z"/></svg>
+          Início
+        </button>
+        <button data-sec="inferencia">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5h7M17.5 14v7"/></svg>
+          Ler
+        </button>
+        <button data-sec="modelos" data-roles="radiologista,admin">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 7.5v9L12 21l8-4.5v-9L12 3zm0 4.2 5.2 2.9L12 13 6.8 10.1 12 7.2zM6 12.2l5 2.8v5.1L6 17.3zm7 7.9v-5.1l5-2.8v5.1z"/></svg>
+          Modelos
+        </button>
+        <button data-sec="feedback" data-roles="radiologista,admin">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5h.01"/></svg>
+          Feedback
+        </button>
+        <button data-sec="utilizadores" data-roles="admin">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M4 19c.6-3 2.6-5 5-5s4.4 2 5 5"/><circle cx="17" cy="9" r="2.4"/><path d="M16 19c.4-2.2 1.7-3.6 3.4-4"/></svg>
+          Utilizadores
+        </button>
+        <button data-sec="conta">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.2"/><path d="M5.5 19.2c.8-3.4 3.2-5.2 6.5-5.2s5.7 1.8 6.5 5.2"/></svg>
+          Perfil
+        </button>
+      </nav>
+
+      <div class="main">
+        <header class="sec-cabeca">
+          <h2 id="titulo-sec">Início</h2>
+        </header>
+
+        <section id="sec-inicio" class="seccao">
+          <div id="inicio-stats" class="stats"></div>
+        </section>
+
+        <section id="sec-inferencia" class="seccao" hidden>
+          <article class="card card-ler">
+            <form id="form-predict">
+              <label class="switch">
+                <span>Incluir explicabilidade (Grad-CAM)</span>
+                <input type="checkbox" name="incluir_xai" checked>
+                <i></i>
+              </label>
+              <label class="zona-ficheiro" id="zona-ficheiro">
+                <input type="file" name="file" accept="image/jpeg,image/png,image/webp" required>
+                <div class="zona-vazio" id="zona-vazio">
+                  <span class="zona-blobs"><i></i><i></i></span>
+                  <p>Escolha uma radiografia de tórax (JPEG ou PNG).</p>
+                </div>
+                <div class="zona-a-processar" id="zona-processar" hidden>
+                  <span class="spinner"></span>
+                  <p>A processar a análise... pode demorar</p>
+                </div>
+              </label>
+            </form>
+            <p id="predict-erro" class="erro" hidden></p>
+          </article>
+          <div id="predict-resultado"></div>
+        </section>
+
+        <section id="sec-modelos" class="seccao" hidden>
+          <div id="modelos-lista" class="grid-modelos"></div>
+        </section>
+
+        <section id="sec-feedback" class="seccao" hidden>
+          <article class="card" id="card-corpus" hidden>
+            <div class="row-between">
+              <h3>Corpus aceite (re-treino offline)</h3>
+              <button type="button" id="btn-corpus" class="secundario">Actualizar exportação</button>
+            </div>
+            <pre id="corpus-json" class="mono"></pre>
+          </article>
           <article class="card">
-            <h3>Como o feedback entra no modelo</h3>
-            <p>Sim, os modelos <em>podem</em> aprender com o parecer do radiologista — mas <strong>não em tempo real</strong>. Cada rótulo fica pendente até um administrador o aceitar. Só então entra no corpus de re-treino <em>offline</em>. Os ficheiros <code>.keras</code> em produção não são actualizados por um clique.</p>
-            <ul class="lista">
-              <li>Júnior: peso 0.25, sempre sujeito a revisão.</li>
-              <li>Pleno: peso 0.70.</li>
-              <li>Sénior: peso 1.00, ainda assim sem treino automático.</li>
-            </ul>
+            <h3>Pareceres</h3>
+            <div id="feedback-lista"></div>
           </article>
-          <article class="card aviso">
-            <h3>Protecção contra parecer frágil</h3>
-            <p>Um radiologista pouco experiente não consegue “puxar” o modelo sozinho. O nível de experiência é definido pelo administrador. Há rasto de quem criou a conta e de quem aceitou o rótulo. Discordância com o ensemble não treina nada até revisão humana.</p>
+        </section>
+
+        <section id="sec-utilizadores" class="seccao" hidden>
+          <article class="card">
+            <h3>Registar utilizador</h3>
+            <form id="form-user" class="form-grid">
+              <label>Email <input type="text" name="email" required></label>
+              <label>Primeiro nome <input name="primeiro_nome" required></label>
+              <label>Último nome <input name="ultimo_nome" required></label>
+              <label>Senha inicial <input type="password" name="senha" minlength="8" required></label>
+              <label>Função
+                <select name="funcao">
+                  <option value="medico">Médico</option>
+                  <option value="radiologista">Radiologista</option>
+                  <option value="admin">Administrador</option>
+                </select>
+              </label>
+              <label>Nível (radiologista)
+                <select name="nivel_experiencia">
+                  <option value="junior">Júnior</option>
+                  <option value="pleno" selected>Pleno</option>
+                  <option value="senior">Sénior</option>
+                </select>
+              </label>
+              <button type="submit">Criar conta</button>
+            </form>
+            <p id="user-erro" class="erro" hidden></p>
           </article>
-        </div>
-        <div id="inicio-stats" class="stats"></div>
-      </section>
+          <article class="card">
+            <h3>Contas</h3>
+            <div class="tabela-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Função</th>
+                    <th>Nível</th>
+                    <th>Criada</th>
+                    <th>Por</th>
+                    <th>Estado</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="users-tbody"></tbody>
+              </table>
+            </div>
+          </article>
+        </section>
 
-      <section id="sec-inferencia" class="seccao" hidden>
-        <article class="card">
-          <h3>Enviar radiografia</h3>
-          <form id="form-predict">
-            <label>Imagem JPEG/PNG
-              <input type="file" name="file" accept="image/jpeg,image/png,image/webp" required>
-            </label>
-            <label class="check">
-              <input type="checkbox" name="incluir_xai" checked>
-              Incluir Grad-CAM
-            </label>
-            <button type="submit">Classificar</button>
-          </form>
-          <p id="predict-erro" class="erro" hidden></p>
-        </article>
-        <div id="predict-resultado"></div>
-      </section>
-
-      <section id="sec-modelos" class="seccao" hidden>
-        <div id="modelos-lista" class="grid-2"></div>
-      </section>
-
-      <section id="sec-feedback" class="seccao" hidden>
-        <article class="card" id="card-corpus" hidden>
-          <div class="row-between">
-            <h3>Corpus aceite (re-treino offline)</h3>
-            <button type="button" id="btn-corpus" class="secundario">Actualizar exportação</button>
-          </div>
-          <pre id="corpus-json" class="mono"></pre>
-        </article>
-        <article class="card">
-          <h3>Pareceres</h3>
-          <div id="feedback-lista"></div>
-        </article>
-      </section>
-
-      <section id="sec-utilizadores" class="seccao" hidden>
-        <article class="card">
-          <h3>Registar utilizador</h3>
-          <form id="form-user" class="form-grid">
-            <label>Email <input type="text" name="email" required></label>
-            <label>Primeiro nome <input name="primeiro_nome" required></label>
-            <label>Último nome <input name="ultimo_nome" required></label>
-            <label>Senha inicial <input type="password" name="senha" minlength="8" required></label>
-            <label>Função
-              <select name="funcao">
-                <option value="medico">Médico</option>
-                <option value="radiologista">Radiologista</option>
-                <option value="admin">Administrador</option>
-              </select>
-            </label>
-            <label>Nível (radiologista)
-              <select name="nivel_experiencia">
-                <option value="junior">Júnior</option>
-                <option value="pleno" selected>Pleno</option>
-                <option value="senior">Sénior</option>
-              </select>
-            </label>
-            <button type="submit">Criar conta</button>
-          </form>
-          <p id="user-erro" class="erro" hidden></p>
-        </article>
-        <article class="card">
-          <h3>Contas</h3>
-          <div class="tabela-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Nome</th>
-                  <th>Email</th>
-                  <th>Função</th>
-                  <th>Nível</th>
-                  <th>Criada</th>
-                  <th>Por</th>
-                  <th>Estado</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody id="users-tbody"></tbody>
-            </table>
-          </div>
-        </article>
-      </section>
-
-      <section id="sec-conta" class="seccao" hidden>
-        <article class="card estreito">
-          <h3>Actualizar a minha senha</h3>
-          <form id="form-senha">
-            <label>Senha actual <input type="password" name="senha_atual" required></label>
-            <label>Nova senha <input type="password" name="senha_nova" minlength="8" required></label>
-            <button type="submit">Guardar</button>
-          </form>
-          <p id="senha-msg" hidden></p>
-        </article>
-      </section>
+        <section id="sec-conta" class="seccao" hidden>
+          <article class="card estreito">
+            <h3>Actualizar a minha senha</h3>
+            <form id="form-senha">
+              <label>Senha actual <input type="password" name="senha_atual" required></label>
+              <label>Nova senha <input type="password" name="senha_nova" minlength="8" required></label>
+              <button type="submit">Guardar</button>
+            </form>
+            <p id="senha-msg" hidden></p>
+          </article>
+        </section>
+      </div>
     </div>
   </div>
   <script src="/static/dashboard.js"></script>
